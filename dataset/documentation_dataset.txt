@@ -1,0 +1,48 @@
+The dataset provided is synthetically generated to provide a binary classification for a set of IoT nodes to act as storage devices for individual blocks, with respect to edge blockchain applications, where an edge miner originally responsible for storing the blockchain may occasionally exhaust its internal space to hold additional blocks, at which point it may delegate new blocks to be stored over individual IoT nodes, also scattered at the edge, provided that the said nodes internal configurations support block storage without hampering the nodes' normal functioning. The dataset provided captures a set of most relevant attributes for edge IoT nodes as well as relevant edge blockchain parameters based on which it may be decided whether or not a particular node may be considered for individual block storage.
+
+The list of attributes and their meaning are as follows:
+
+1. Block Size: Denotes the size of the block to be stored (in kB, range: 10-1024 kB)
+
+2. device_id: Unique ID of the IoT node (depends on actual nodes deployed, varchar)
+
+3. device_type: Type of application supported by the device (30 different applications provided)
+
+4. microcontroller: type of microcontroller and architecture used in IoT device (11 different microcontroller types provided)
+
+5. critical_score: Integer value ranging from 1-5 denoting the criticality of the application the node is serving. 
+
+6. total_storage: total storage capacity of the device, EEPROM/secondary storage (range 128-1048576 kB)
+
+7. current_available_storage: Currently available free space in the device at time 't' (updated from time to time) (range: 0-1048576 kB)
+
+8. blockchain_load: Size of current blockchain load on the device at time 't', if any (updated from time to time) (range: 0-104305 kB)
+
+9. stability_score: Integer score reflecting uptime/reliability of the device at time 't' (updated from time to time) (range: 1-5)
+
+10. projected_growth: Rate of growth of daily on-device storage requirements based on application of the device, per day(KB/day) (range: 0-inf)
+
+11. Output/storage_acceptance: Binary variable (0/1) denoting whether the node is suitable for storing an additional block 
+
+
+
+Justification for relevant attributes:
+
+1. Block Size: The size of the block to be stored determines its feasibility over IoT nodes.
+
+2. device_type: The supported application of the nodes determines their memory usage and distribution and thereby decision to store blocks.
+
+3. microcontroller: The type and architecture of microcontroller determine the ROM characteristics as well as refresh rates.
+
+4. critical_score: The criticality of the node in question determines the feasibility for it to store blocks. It is not desirable to exhaust memory of high critical nodes by storing random blocks and vice versa.
+
+5. total_storage: Key component which determines the net storage of the IoT nodes.
+
+6. current_available_storage: Most fundamental component denoting whether a new block can be accommodated further.
+
+7. blockchain_load: Denotes the number of blocks already present in the node, therefore is it feasible to include more blocks?
+
+8. stability_score: The stability of the IoT node is critical in determining its block acceptance. A node with higher stability and uptime is better suited for block storage. 
+
+9. projected_growth: Denotes the amount of storage in average that the node requires for its own application and its growth rate. If the node has high application growth rate, then it is not suited for block storage as it needs to keep space for its application data.
+
