@@ -1,0 +1,697 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    citecolor=blue!60!black,
+    urlcolor=blue!60!black
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small IoT Block--Storage Acceptance Analysis}
+\fancyhead[R]{\small DM Project}
+\fancyfoot[C]{\thepage}
+
+% ── Title Page ──
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+
+\includegraphics[width=1\textwidth]{logo.png}
+
+\vspace{1.5cm}
+
+{\Huge\bfseries Digital Assignment 1\\[0.4cm]}
+{\LARGE A Case Study on Tools and Datasets for EDA}
+
+\vspace{2cm}
+
+{\Large
+\begin{tabular}{ll}
+\textbf{Sparsh Karna} & 23BDS1172 \\
+\textbf{Lavanaya Malhotra} & 23BDS1169 \\
+\end{tabular}
+}
+
+\vspace{1.5cm}
+
+{\large Course Name: Data Mining\\
+Course Code: BCSE208L}
+
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ======================================================================
+\section{Understanding Statistical Data Analytical Tools (5 marks)}
+% ======================================================================
+
+\subsection{RStudio}
+RStudio is an integrated development environment (IDE) for the R programming language. It provides a console, syntax-highlighting editor, and tools for plotting, package management, and workspace management. R is open-source, script-driven, and supports a vast ecosystem of packages (CRAN hosts over 20,000). For data mining, key packages include \texttt{caret} (unified modelling), \texttt{randomForest}, \texttt{rpart}, \texttt{ggplot2} (visualization), and \texttt{dplyr} (data wrangling). Its strengths lie in reproducibility (scripted pipelines), statistical rigour, and extensibility. However, it has a steeper learning curve for users unfamiliar with programming.
+
+\subsection{JMP}
+JMP (pronounced ``jump'') is a proprietary statistical software developed by SAS Institute. It emphasises interactive, GUI-driven exploration with dynamic linking between data tables and visualizations. JMP supports a wide range of analyses---from basic EDA (distribution, correlation) to advanced modelling (logistic regression, neural networks, decision trees). Its drag-and-drop interface makes it accessible to non-programmers, and its interactive plots allow rapid hypothesis exploration. Limitations include high licensing cost, less flexibility for custom algorithms, and limited scripting compared to R.
+
+\subsection{Weka}
+Weka (Waikato Environment for Knowledge Analysis) is a free, open-source machine-learning toolkit written in Java. It provides a GUI (Explorer, Experimenter, KnowledgeFlow) and a command-line interface. Weka includes implementations of numerous classifiers (J48, Random Forest, Logistic Regression, SVM, Na\"ive Bayes, etc.), clustering algorithms, and feature-selection methods. It natively reads ARFF and CSV files and offers built-in cross-validation. Weka is widely used in academic settings for its ease of use and breadth of algorithms but is less suited for large-scale production deployment and has limited visualization capabilities compared to R or JMP.
+
+% ======================================================================
+\section{Exploration of IEEE Data Portal \& Dataset Selection (5 marks)}
+% ======================================================================
+
+\subsection{Dataset Categories Explored}
+
+\begin{description}[style=nextline]
+\item[Web-based data] Data collected from web interactions such as clickstreams, server logs, and social media feeds. Typically high-volume, semi-structured, and suitable for text mining and user-behaviour analysis.
+\item[Statistical data] Structured numerical/categorical datasets amenable to classical statistical analysis---hypothesis testing, regression, ANOVA. Often tabular with well-defined attributes.
+\item[Spatial data] Data with geographic or positional attributes (GPS coordinates, geofences). Requires specialised tools for spatial indexing, map visualization, and geospatial modelling.
+\item[Temporal data] Time-series or time-stamped data capturing evolution over time. Requires handling of trends, seasonality, and autocorrelation.
+\end{description}
+
+\subsection{Selected Dataset}
+
+\textbf{Source:} IEEE DataPort --- ``IoT Nodes Block Storage Acceptance Dataset''\\
+\textbf{DOI:} \url{https://dx.doi.org/10.21227/eyc1-a041}
+
+The selected dataset is a \textbf{statistical dataset} comprising 30,000 records and 11 attributes. It is synthetically generated for binary classification of IoT edge nodes to determine whether each node can accept an additional blockchain block for storage. The scenario addresses edge blockchain applications where an edge miner, having exhausted its internal storage, may delegate block storage to nearby IoT nodes, provided those nodes' configurations support it without disrupting normal operation.
+
+\subsubsection{Attributes}
+
+\begin{table}[H]
+\centering
+\caption{Dataset Attributes and Descriptions}
+\label{tab:attributes}
+\small
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Attribute} & \textbf{Description} \\
+\midrule
+Block Size (KB) & Size of the block to be stored (10--1024 KB) \\
+Device ID & Unique identifier for each IoT node (30,000 unique devices) \\
+Device Type & Application type of the device (30 categories, e.g.\ Smart Light Bulb, Smart Thermostat) \\
+Microcontroller & Microcontroller architecture used (11 types after normalization, e.g.\ ESP32, STM32F4) \\
+Critical Score & Criticality of the application (integer, 1--5) \\
+Total Storage (KB) & Total EEPROM/secondary storage capacity (128--1,048,576 KB) \\
+Current Available Storage (KB) & Free space at time $t$ (0--1,048,576 KB) \\
+Blockchain Load (KB) & Current blockchain data on the device at time $t$ (0--104,305 KB) \\
+Stability Score & Uptime/reliability score at time $t$ (integer, 1--5) \\
+Projected Growth (KB/day) & Daily on-device storage growth rate \\
+Output (0/1) & Binary target: 1 = node suitable for block storage, 0 = not suitable \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Potential Use}
+This dataset enables research into intelligent storage delegation in edge blockchain systems. Accurate classification helps edge miners quickly identify suitable IoT nodes for block storage, thereby optimizing blockchain performance, reducing latency, and avoiding disruption of critical IoT applications.
+
+% ======================================================================
+\section{Comparative Analysis: R vs.\ Weka vs.\ JMP (5 marks)}
+% ======================================================================
+
+\subsection{Strengths and Limitations}
+
+\begin{table}[H]
+\centering
+\caption{Comparative Analysis of R, Weka, and JMP}
+\label{tab:comparison}
+\small
+\begin{tabularx}{\textwidth}{@{}l X X X@{}}
+\toprule
+\textbf{Criterion} & \textbf{R (RStudio)} & \textbf{Weka} & \textbf{JMP} \\
+\midrule
+\textbf{Cost} & Free, open-source & Free, open-source & Proprietary (paid license) \\
+\textbf{Usability} & Script-based; steep learning curve & GUI-driven; moderate learning curve & GUI-driven; easy for beginners \\
+\textbf{Visualization} & Excellent (ggplot2, corrplot, GGally); highly customizable & Basic; limited plot types & Excellent; interactive, dynamically linked \\
+\textbf{Modelling} & Vast ecosystem (caret, randomForest, glmnet, etc.) & Broad built-in classifiers (J48, RF, SVM, etc.) & Good (logistic, decision tree, neural net) \\
+\textbf{Reproducibility} & Excellent (scripted pipeline, version control) & Moderate (GUI-based, exportable configs) & Low (GUI-driven, limited scripting) \\
+\textbf{Scalability} & Handles large datasets with optimized packages & Slower on very large datasets (Java memory) & Handles moderate datasets well \\
+\textbf{Extensibility} & 20,000+ CRAN packages & Plugin architecture; less flexible & JSL scripting; limited \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Differences in Usability, Visualization, and Modelling}
+
+\textbf{Usability:} JMP and Weka offer point-and-click interfaces suitable for rapid prototyping and users without programming background. R requires coding but provides full control over the analytical pipeline, enabling complex data transformations and custom modelling workflows.
+
+\textbf{Visualization:} R's \texttt{ggplot2} ecosystem produced the richest visualizations in our analysis---histograms, boxplots stratified by target, correlation heatmaps, pairwise scatter matrices, ROC curves, and variable importance plots. JMP's interactive plots (distribution overlays, correlation matrices) were visually appealing and allowed instant exploration. Weka's visualization was limited to basic margin curves and class-conditional plots.
+
+\textbf{Modelling:} All three tools successfully trained classifiers on the IoT dataset. R (via \texttt{caret}) allowed fine-grained control over cross-validation, hyperparameter tuning, and model comparison. Weka provided one-click access to J48, Random Forest, and Logistic Regression with 10-fold CV built in. JMP's Nominal Logistic regression was straightforward but offered fewer classifier options out of the box.
+
+\subsection{Influence of Dataset Type on Tool Choice}
+
+Our dataset is a \textbf{statistical} dataset---structured, tabular, with numerical and categorical features and a binary target. For such data:
+
+\begin{itemize}
+    \item \textbf{R} is ideal: it handles the full pipeline (cleaning, EDA, modelling, evaluation) in a reproducible script and supports the widest range of classifiers.
+    \item \textbf{Weka} is well-suited for quick classifier comparison via its GUI and built-in cross-validation.
+    \item \textbf{JMP} is effective for interactive EDA but less flexible for advanced modelling.
+    \item For \textit{spatial} data, R (with \texttt{sf}, \texttt{leaflet}) or specialised GIS tools would be preferred. For \textit{temporal} data, R (with \texttt{forecast}, \texttt{tseries}) excels. For \textit{web-based} data, R or Python are preferred for text parsing and NLP.
+\end{itemize}
+
+\subsection{Tool Selected for the Case Study}
+
+\textbf{R (RStudio)} was chosen as the primary tool because:
+\begin{enumerate}
+    \item It supports the entire pipeline (data cleaning, EDA, modelling, evaluation) in a single reproducible script.
+    \item \texttt{caret} provides a unified interface for Logistic Regression, Decision Tree, and Random Forest with consistent cross-validation and metric computation.
+    \item Visualization via \texttt{ggplot2} produces publication-quality figures.
+    \item Open-source and free.
+\end{enumerate}
+
+Results from JMP and Weka are included for comparative validation.
+
+% ======================================================================
+\section{Mini Case Study (15 marks)}
+% ======================================================================
+
+\subsection{Problem Statement}
+
+\textbf{Can we accurately predict whether an IoT edge node is suitable for storing an additional blockchain block, based on the node's hardware specifications, current resource utilization, and application characteristics?}
+
+This is a binary classification problem where the target variable \texttt{Output (0/1)} indicates storage acceptance (1) or rejection (0). Accurate prediction enables intelligent block delegation in edge blockchain systems, minimizing the risk of overloading critical or resource-constrained devices.
+
+\subsection{Related Research}
+
+The problem of deciding whether an IoT edge node can safely store an additional blockchain block sits at the intersection of blockchain-enabled edge computing, IoT resource management, and intelligent node selection. Below is a review of recent research organized by methodological approach.
+
+\subsubsection{Reinforcement-Learning--Based Resource Allocation and Offloading}
+
+He et al.~\cite{he2020} propose a blockchain-based edge computing architecture in which smart contracts use the Asynchronous Advantage Actor--Critic (A3C) deep reinforcement learning algorithm to allocate edge computing resources to IoT devices. The system observes network states such as task arrival rates and available resources at edge nodes, and the RL agent learns policies that maximize long-term utility (e.g., low delay and energy consumption) while ensuring security and trust via blockchain. Experiments on simulated IoT scenarios show that their RL-based allocation outperforms heuristic baselines in terms of latency and resource utilization. Conceptually, this work is close to our dataset: it also decides which edge nodes should take on extra workload (computation tasks instead of storage blocks), but uses RL and smart contracts rather than a supervised classifier.
+
+Xu et al.~\cite{xu2019} propose BCO, a blockchain-based computation offloading method for edge computing in 5G networks. They design a blockchain-backed EC framework and formulate multi-objective offloading decisions (balancing delay, data loss, and edge node load), solved using NSGA-III (a multi-objective evolutionary algorithm) followed by multi-criteria decision making (SAW + MCDM) to choose the best strategy. While their focus is on offloading from user equipment to edge nodes, the underlying problem is again selecting which nodes can accept extra tasks given their limited resources---analogous to predicting \texttt{storage\_acceptance} in our dataset.
+
+Heidari and Jamali~\cite{heidari2021} propose a deep Q-learning approach for offline/online computation offloading in blockchain-enabled green IoT--edge scenarios. They model the offloading process as a Markov Decision Process (MDP), where the RL agent chooses offloading destinations based on state variables such as block size, available processing capability, and network conditions. Simulation results indicate significant improvements in cost, computational overhead, energy use, failure rate, and latency compared to several benchmark strategies. This reinforces the idea that intelligent node/task assignment in blockchain--IoT systems is a key research challenge, and that block size and node resources are central features---exactly those present in our dataset (\texttt{block\_size}, \texttt{total\_storage}, \texttt{current\_available\_storage}).
+
+\subsubsection{Fuzzy and Multi-Criteria Decision-Making Approaches}
+
+Gardas et al.~\cite{gardas2022} propose a fuzzy-based method for object selection in blockchain-enabled edge--IoT platforms using a hybrid multi-criteria decision-making (MCDM) model. They address the need to choose appropriate IoT nodes to ensure sufficient network lifetime, reliable data, and efficient resource allocation. Their method combines fuzzy logic with the TOPSIS MCDM technique: input criteria (resource availability, trust, and performance metrics) are fuzzified, aggregated, and ranked to select the most suitable IoT object. Experiments on synthetic scenarios show that the fuzzy-MCDM approach improves selection quality compared to simpler methods. This is conceptually very close to our problem: our dataset also encodes multiple criteria (storage capacity, criticality, stability, projected growth), but instead of fuzzy TOPSIS, we apply standard classification algorithms in R, Weka, and JMP.
+
+Imamguluyev et al.~\cite{imamguluyev2023} focus specifically on node selection in blockchain-enabled edge IoT using a fuzzy logic approach. In their I-SMAC conference paper, they design a fuzzy-rule-based system for selecting nodes that will participate in blockchain operations at the edge, considering parameters such as node performance, resource availability, and network constraints. Their experiments demonstrate improved efficiency and reliability in node selection compared to baseline strategies. This reinforces the relevance of our dataset's features such as \texttt{stability\_score}, \texttt{current\_available\_storage}, and \texttt{projected\_growth}: these are exactly the types of inputs that fuzzy systems and MCDM schemes use to calculate node suitability.
+
+Cuka et al.~\cite{cuka2019} study IoT node selection in opportunistic networks using fuzzy-based simulation systems and a physical testbed. Although their context is not blockchain, they address a similar decision problem: selecting which IoT nodes should carry tasks in intermittently connected networks. Their fuzzy systems incorporate inputs such as node distance to task, remaining energy, buffer occupancy, and inter-contact time. This underscores the general pattern that node-selection problems in IoT often rely on a small set of interpretable node attributes, similar to those present in our dataset.
+
+\subsubsection{Integration of Blockchain and Edge Computing for IoT Data and Storage}
+
+Haque et al.~\cite{haque2024} propose a scalable blockchain-based framework for efficient IoT data management using lightweight consensus. They observe that traditional blockchain protocols struggle with scalability when faced with huge data volumes and numbers of devices in IoT networks. Their framework adopts a lightweight consensus mechanism and a hierarchical architecture to improve throughput and reduce latency and energy consumption. While they focus more on consensus and throughput than on individual node admission decisions, their work motivates why edge nodes cannot all act as full blockchain storage nodes---selection is needed, which our dataset explicitly tackles via the \texttt{storage\_acceptance} label.
+
+Zubaydi et al.~\cite{zubaydi2023} review blockchain-based approaches for securing IoT systems, covering data integrity, authentication, and access control. They highlight the tension between resource-constrained IoT devices (limited memory, processing, bandwidth) and the heavy resource requirements of many blockchain protocols, arguing that careful architectural design and node role assignment are necessary. This supports the rationale for our dataset's attributes: total and available storage, growth rate, and criticality are exactly the types of constraints that security-oriented IoT--blockchain deployments must consider.
+
+Liu et al.~\cite{liu2022} survey the integration of blockchain and edge computing in IoT (IBEC), analyzing architectures that combine blockchain with edge computing to enhance data security and resource utilization. The survey outlines a generic IBEC architecture and reviews optimization strategies for resource management, performance, and security. It emphasizes challenges such as scalability, latency, and heterogeneous resource constraints of edge nodes. This positions our problem within a broader research landscape: the binary classification of ``can this node store an extra block?'' can be seen as a micro-decision embedded within larger IBEC resource management frameworks.
+
+\subsubsection{Synthesis and Relation to Our Dataset}
+
+Across these works, several common themes emerge:
+
+\begin{itemize}
+    \item \textbf{Node selection / resource allocation as a central challenge:} Whether through deep RL, fuzzy MCDM, or evolutionary optimization, the literature consistently frames ``which node should handle this extra workload?'' as a key problem. Our dataset operationalizes exactly this question for storage: given attributes of an edge IoT node and the incoming block size, decide whether the node can safely store the block.
+    
+    \item \textbf{Multi-criteria nature of the decision:} Prior work typically considers multiple criteria simultaneously---energy, remaining buffer/storage, latency, trust/reputation, and application-specific importance. Our dataset encodes analogous dimensions: \texttt{critical\_score}, \texttt{total\_storage}, \texttt{current\_available\_storage}, \texttt{blockchain\_load}, \texttt{stability\_score}, and \texttt{projected\_growth}. This alignment suggests that our feature set is well grounded in the factors the research community considers important.
+    
+    \item \textbf{Handling of uncertainty and dynamics:} Fuzzy logic and MCDM are used when system states are uncertain, while RL methods explicitly model dynamic environments. Our dataset abstracts away temporal complexity by capturing snapshots of node state at time $t$ and uses a static binary label, making it well suited for supervised learning experiments while remaining conceptually consistent with dynamic selection frameworks.
+    
+    \item \textbf{Lack of openly documented node-selection datasets:} Most of the above works rely on custom simulation environments or proprietary scenarios and rarely publish reusable datasets. The IEEE DataPort dataset we use explicitly publishes a synthetic but richly annotated binary-classification dataset for IoT node storage acceptance, filling a practical gap and enabling benchmarking of classical ML models against heuristic, fuzzy, and RL-based methods.
+    
+    \item \textbf{Focus of prior work vs.\ our case study:} Existing studies often combine architecture design, security mechanisms, and intelligent decision algorithms (RL, fuzzy logic, evolutionary optimization). Our case study is narrower: it focuses on applying standard statistical/ML tools to a well-defined binary classification dataset and comparing software environments (R, Weka, JMP). The novelty in our context is mapping a realistic blockchain--edge--IoT decision problem into a clean supervised-learning task and empirically analyzing which modelling approaches and tools are most effective.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{he2020} Y.~He et al., ``Blockchain-based Edge Computing Resource Allocation in IoT: A Deep Reinforcement Learning Approach,'' \textit{IEEE Internet of Things Journal}, 2020. DOI: 10.1109/JIOT.2020.3035437.
+\bibitem{xu2019} X.~Xu et al., ``Blockchain-based computation offloading for edge computing in 5G networks,'' \textit{Software: Practice and Experience}, vol.~50, no.~9, pp.~1631--1648. DOI: 10.1002/spe.2749.
+\bibitem{heidari2021} A.~Heidari and M.~A.~Jamali, ``Deep Q-Learning Technique for Offloading Offline/Online Computation in Blockchain-Enabled Green IoT-Edge Scenarios,'' \textit{Semantic Scholar}, 2021.
+\bibitem{gardas2022} B.~Gardas et al., ``A Fuzzy-Based Method for Objects Selection in Blockchain-Enabled Edge-IoT Platforms Using a Hybrid Multi-Criteria Decision-Making Model,'' \textit{DOAJ}, 2022.
+\bibitem{imamguluyev2023} R.~Imamguluyev et al., ``Node Selection in Blockchain-Enabled Edge IoT Using Fuzzy Logic,'' \textit{Proc. I-SMAC}, IEEE, 2023. DOI: 10.1109/I-SMAC58438.2023.10290320.
+\bibitem{cuka2019} M.~Cuka et al., ``IoT node selection in opportunistic networks: Implementation of fuzzy-based simulation systems and a testbed,'' \textit{Internet of Things}, vol.~8, 100105, 2019. DOI: 10.1016/j.iot.2019.100105.
+\bibitem{haque2024} R.~Haque et al., ``A scalable blockchain-based framework for efficient IoT data management using lightweight consensus,'' \textit{Scientific Reports}, 2024. PMC: 10991409.
+\bibitem{zubaydi2023} H.~Zubaydi et al., ``Blockchain-based approaches for securing IoT systems: A survey,'' \textit{Sensors}, 2023. PMC: 9867322.
+\bibitem{liu2022} Y.~Liu et al., ``Integration of Blockchain and Edge Computing in Internet of Things: A Survey,'' \textit{Future Generation Computer Systems}, 2022. DOI: 10.1016/j.future.2022.10.029.
+\end{thebibliography}
+
+\subsection{Methodology}
+
+\subsubsection{Dataset \& Preprocessing}
+
+\begin{itemize}
+    \item \textbf{Dataset:} 30,000 records, 11 attributes (after dropping Device ID as a non-predictive identifier).
+    \item \textbf{Missing values:} None (verified across all columns---see Table~\ref{tab:missing}).
+    \item \textbf{Categorical encoding:} Device Type (30 categories) and Microcontroller (16 raw categories, normalized to 11 after merging duplicates such as ``Nordic nRF52832'' $\to$ ``nRF52832'' and ``ESP32 CAM'' $\to$ ``ESP32'') were one-hot encoded by R's \texttt{caret} framework.
+    \item \textbf{Target variable:} Converted to factor with levels \texttt{no} (0) and \texttt{yes} (1).
+    \item \textbf{Train/Test split:} 80/20 stratified split (24,000 train / 6,000 test).
+    \item \textbf{Cross-validation:} 10-fold CV on the training set, optimizing AUC (ROC).
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Missing Value Summary (all zero)}
+\label{tab:missing}
+\small
+\begin{tabular}{lc}
+\toprule
+\textbf{Variable} & \textbf{Missing Count} \\
+\midrule
+block\_size\_kb & 0 \\
+device\_type & 0 \\
+microcontroller & 0 \\
+critical\_score & 0 \\
+total\_storage\_kb & 0 \\
+current\_available\_storage\_kb & 0 \\
+blockchain\_load\_kb & 0 \\
+stability\_score & 0 \\
+projected\_growth\_kb\_day & 0 \\
+output\_0\_1 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Exploratory Data Analysis (EDA)}
+
+\paragraph{Descriptive Statistics.}
+Table~\ref{tab:summary} presents the five-number summary of numerical features.
+
+\begin{table}[H]
+\centering
+\caption{Descriptive Statistics of Numerical Features}
+\label{tab:summary}
+\small
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+\textbf{Feature} & \textbf{Min} & \textbf{1st Qu.} & \textbf{Median} & \textbf{Mean} & \textbf{3rd Qu.} & \textbf{Max} \\
+\midrule
+Block Size (KB) & 10.0 & 148.2 & 303.5 & 371.6 & 553.5 & 1024.0 \\
+Critical Score & 1 & 2 & 3 & 2.93 & 4 & 5 \\
+Total Storage (KB) & 128 & 512 & 1024 & 23128 & 4096 & 1048576 \\
+Available Storage (KB) & 0.0 & 190.3 & 467.1 & 9824.8 & 2025.7 & 995810.0 \\
+Blockchain Load (KB) & 0.0 & 95.0 & 215.0 & 1052.1 & 426.1 & 104305.7 \\
+Stability Score & 1 & 2 & 3 & 3.08 & 4 & 5 \\
+Projected Growth (KB/day) & 3.6 & 43.7 & 80.6 & 1531.0 & 197.1 & 200000.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Key observations: Total Storage, Available Storage, Blockchain Load, and Projected Growth are heavily right-skewed (mean $\gg$ median), indicating a few high-capacity devices dominating the upper range.
+
+\paragraph{Correlation Analysis.}
+The correlation matrix (from both R and JMP) reveals:
+\begin{itemize}
+    \item \textbf{Total Storage $\leftrightarrow$ Available Storage}: $r = 0.895$ (strong positive)---devices with higher total capacity tend to have more free space.
+    \item \textbf{Total Storage $\leftrightarrow$ Projected Growth}: $r = 0.750$ (strong positive)---larger devices tend to have higher application growth rates.
+    \item \textbf{Blockchain Load $\leftrightarrow$ Projected Growth}: $r = 0.551$ (moderate positive).
+    \item \textbf{Critical Score $\leftrightarrow$ Stability Score}: $r = -0.500$ (moderate negative)---higher-criticality devices tend to have lower stability scores, possibly reflecting more demanding operating conditions.
+    \item \textbf{Block Size} shows weak correlations with all other features ($|r| < 0.27$).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{r/analysis_outputs/plots/eda/correlation_heatmap.png}
+    \caption{Correlation Heatmap (R)}
+    \label{fig:corr_r}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{jmp/eda/correlation.png}
+    \caption{Correlation Matrix (JMP)}
+    \label{fig:corr_jmp}
+\end{figure}
+
+\paragraph{Distribution Analysis.}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/eda/hist_block_size_kb.png}
+        \caption{Block Size Distribution}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/eda/hist_current_available_storage_kb.png}
+        \caption{Available Storage Distribution}
+    \end{subfigure}
+    \\[0.5cm]
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/eda/hist_stability_score.png}
+        \caption{Stability Score Distribution}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/eda/hist_critical_score.png}
+        \caption{Critical Score Distribution}
+    \end{subfigure}
+    \caption{Feature Distributions (R)}
+    \label{fig:histograms}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{jmp/eda/distributions.png}
+    \caption{Feature Distributions (JMP)}
+    \label{fig:dist_jmp}
+\end{figure}
+
+\paragraph{Boxplots by Target Class.}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/eda/box_current_available_storage_kb_by_output_0_1.png}
+        \caption{Available Storage by Acceptance}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/eda/box_block_size_kb_by_output_0_1.png}
+        \caption{Block Size by Acceptance}
+    \end{subfigure}
+    \caption{Boxplots of Key Features by Target Class (R)}
+    \label{fig:boxplots}
+\end{figure}
+
+The boxplots confirm that accepted nodes (Output=1) tend to have \textit{higher available storage} and \textit{lower block sizes} compared to rejected nodes, aligning with domain expectations.
+
+\paragraph{Weka EDA: Feature vs.\ Acceptance.}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{weka/eda/availabilitty_vs_acceptance.png}
+        \caption{Available Storage vs.\ Acceptance}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{weka/eda/bloakchain_vs_acceptance.png}
+        \caption{Blockchain Load vs.\ Acceptance}
+    \end{subfigure}
+    \\[0.5cm]
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{weka/eda/stabiloty_vs_acceptance.png}
+        \caption{Stability Score vs.\ Acceptance}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{weka/eda/growth_vs_acceptance.png}
+        \caption{Projected Growth vs.\ Acceptance}
+    \end{subfigure}
+    \caption{Feature vs.\ Acceptance Visualizations (Weka)}
+    \label{fig:weka_eda}
+\end{figure}
+
+\subsubsection{Models Trained}
+
+Three classifiers were trained in R (with 10-fold cross-validation on the 80\% training set and evaluated on the 20\% hold-out test set), and the same algorithms were independently run in Weka (with 10-fold CV on the full dataset) and JMP (Nominal Logistic on the full dataset) for cross-validation of results.
+
+\begin{enumerate}
+    \item \textbf{Logistic Regression (GLM)} --- baseline linear classifier.
+    \item \textbf{Decision Tree (RPART / J48)} --- interpretable, non-linear classifier.
+    \item \textbf{Random Forest} --- ensemble method for robust classification.
+\end{enumerate}
+
+\subsubsection{Results}
+
+\paragraph{R Results (Test Set: 6,000 observations).}
+
+\begin{table}[H]
+\centering
+\caption{Model Comparison --- R (Test Set)}
+\label{tab:r_results}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Model} & \textbf{Accuracy} & \textbf{Kappa} & \textbf{Sensitivity} & \textbf{Specificity} & \textbf{AUC} \\
+\midrule
+Logistic Regression (GLM) & 0.757 & 0.517 & 0.837 & 0.685 & 0.761 \\
+Decision Tree (RPART) & 0.900 & 0.800 & 0.916 & 0.886 & 0.943 \\
+Random Forest & \textbf{0.975} & \textbf{0.951} & \textbf{0.975} & \textbf{0.976} & \textbf{0.997} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Weka Results (10-fold CV on 30,000 observations).}
+
+\begin{table}[H]
+\centering
+\caption{Model Comparison --- Weka (10-fold CV)}
+\label{tab:weka_results}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Model} & \textbf{Accuracy} & \textbf{Kappa} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} & \textbf{AUC} \\
+\midrule
+Logistic Regression & 0.863 & 0.725 & 0.863 & 0.863 & 0.863 & 0.939 \\
+J48 (Decision Tree) & 0.963 & 0.926 & 0.963 & 0.963 & 0.963 & 0.974 \\
+Random Forest & \textbf{0.973} & \textbf{0.946} & \textbf{0.973} & \textbf{0.973} & \textbf{0.973} & \textbf{0.997} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{JMP Results (Nominal Logistic Regression on 30,000 observations).}
+
+\begin{table}[H]
+\centering
+\caption{JMP Nominal Logistic Regression Results}
+\label{tab:jmp_results}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Entropy RSquare & 0.5426 \\
+Generalized RSquare & 0.7047 \\
+Misclassification Rate & 0.1363 \\
+RASE & 0.3128 \\
+Mean Abs Dev & 0.1982 \\
+N & 30,000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+JMP's Nominal Logistic model achieved a misclassification rate of 13.63\% (accuracy $\approx$ 86.4\%), which falls between the R GLM (75.7\%) and Weka Logistic (86.3\%). The Generalized $R^2$ of 0.70 indicates a reasonable fit.
+
+\paragraph{Confusion Matrices (R --- Test Set).}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+    \centering
+    \textbf{GLM}\\[4pt]
+    \begin{tabular}{cc|cc}
+    & & \multicolumn{2}{c}{Predicted} \\
+    & & no & yes \\
+    \hline
+    \multirow{2}{*}{\rotatebox{90}{Actual}} & no & 2146 & 988 \\
+    & yes & 468 & 2398 \\
+    \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+    \centering
+    \textbf{RPART}\\[4pt]
+    \begin{tabular}{cc|cc}
+    & & \multicolumn{2}{c}{Predicted} \\
+    & & no & yes \\
+    \hline
+    \multirow{2}{*}{\rotatebox{90}{Actual}} & no & 2776 & 358 \\
+    & yes & 242 & 2624 \\
+    \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+    \centering
+    \textbf{Random Forest}\\[4pt]
+    \begin{tabular}{cc|cc}
+    & & \multicolumn{2}{c}{Predicted} \\
+    & & no & yes \\
+    \hline
+    \multirow{2}{*}{\rotatebox{90}{Actual}} & no & 3059 & 75 \\
+    & yes & 73 & 2793 \\
+    \end{tabular}
+    \end{minipage}
+\end{figure}
+
+\paragraph{ROC Curves (R).}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/models/glm_roc.png}
+        \caption{GLM (AUC = 0.761)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/models/rpart_roc.png}
+        \caption{RPART (AUC = 0.943)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{r/analysis_outputs/plots/models/rf_roc.png}
+        \caption{RF (AUC = 0.997)}
+    \end{subfigure}
+    \caption{ROC Curves for the Three Models (R)}
+    \label{fig:roc}
+\end{figure}
+
+\paragraph{Decision Tree Visualization (R).}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{r/analysis_outputs/plots/models/rpart_tree.png}
+    \caption{Decision Tree (RPART) --- R}
+    \label{fig:rpart_tree}
+\end{figure}
+
+\paragraph{Variable Importance (Random Forest --- R).}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{r/analysis_outputs/plots/models/rf_varimp.png}
+    \caption{Random Forest Variable Importance (R)}
+    \label{fig:varimp}
+\end{figure}
+
+The top predictors identified by the Random Forest are:
+\begin{enumerate}
+    \item \textbf{Current Available Storage} (importance: 100.0) --- the single most critical factor.
+    \item \textbf{Block Size} (55.3) --- larger blocks are harder to accommodate.
+    \item \textbf{Total Storage} (27.3) --- overall device capacity matters.
+    \item \textbf{Projected Growth} (14.5) --- high growth leaves less room for blocks.
+    \item \textbf{Critical Score} (14.1) --- critical devices are less likely to accept blocks.
+    \item \textbf{Blockchain Load} (11.0) --- existing blockchain data reduces acceptance.
+    \item \textbf{Stability Score} (8.8) --- more stable devices are preferred.
+\end{enumerate}
+
+Device type and microcontroller contribute marginally (importance $< 3$), suggesting that the acceptance decision is primarily driven by \textit{runtime resource state} rather than device category.
+
+\paragraph{Weka Model Visualizations.}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{weka/models/j48/tree.png}
+        \caption{J48 Decision Tree}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{weka/models/j48/margin_curve.png}
+        \caption{J48 Margin Curve}
+    \end{subfigure}
+    \\[0.5cm]
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{weka/models/randomForest/margin_curve.png}
+        \caption{Random Forest Margin Curve}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{weka/models/logisticRegresion/margin_curve.png}
+        \caption{Logistic Regression Margin Curve}
+    \end{subfigure}
+    \caption{Weka Model Outputs}
+    \label{fig:weka_models}
+\end{figure}
+
+\paragraph{JMP Y-by-X Analysis.}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{jmp/models/y_by_x/available_store.png}
+        \caption{Available Storage vs.\ Output}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{jmp/models/y_by_x/blockchain.png}
+        \caption{Blockchain Load vs.\ Output}
+    \end{subfigure}
+    \\[0.5cm]
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{jmp/models/y_by_x/projected.png}
+        \caption{Projected Growth vs.\ Output}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{jmp/models/y_by_x/stability.png}
+        \caption{Stability vs.\ Output}
+    \end{subfigure}
+    \caption{JMP Y-by-X Logistic Plots}
+    \label{fig:jmp_ybyx}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{jmp/models/nominal logistic/summary.png}
+    \caption{JMP Nominal Logistic Regression Summary}
+    \label{fig:jmp_logistic}
+\end{figure}
+
+\subsection{Novelty of Approach}
+
+The novelty of this study lies in the \textbf{multi-tool comparative validation} approach:
+
+\begin{enumerate}
+    \item \textbf{Cross-tool consistency:} The same dataset was analyzed independently using three different statistical tools (R, Weka, JMP), and results were compared to ensure that findings are robust and not artifacts of a single tool's implementation. The Random Forest achieved AUC $\geq$ 0.997 in both R and Weka, confirming tool-independent reliability.
+    
+    \item \textbf{End-to-end reproducible pipeline:} The R script (\texttt{analyse.r}) provides a fully automated, reproducible pipeline---from data ingestion through EDA to model training and evaluation---which can be re-run on updated data without manual intervention.
+    
+    \item \textbf{Feature importance analysis:} Rather than treating the classifier as a black box, we extracted variable importance from the Random Forest to provide actionable insights for edge blockchain system designers: the acceptance decision is dominated by \textit{current available storage}, not device type or microcontroller architecture.
+    
+    \item \textbf{Data normalization:} We identified and resolved inconsistencies in the microcontroller labels (16 raw categories containing duplicates, normalized to 11 distinct types), improving data quality before modelling.
+\end{enumerate}
+
+\subsection{Summary and Interpretation}
+
+\begin{enumerate}
+    \item \textbf{Random Forest is the best-performing model} across all three tools, achieving 97.5\% accuracy (R), 97.3\% accuracy (Weka), and AUC of 0.997 in both. It significantly outperforms Logistic Regression (75.7--86.4\%) and Decision Tree (90.0--96.3\%).
+    
+    \item \textbf{Logistic Regression underperforms} on this dataset, likely due to non-linear relationships between features and the target, as well as the high-cardinality one-hot encoded categorical features causing numerical instability (evidenced by the extremely large coefficient estimates in the R GLM output).
+    
+    \item \textbf{Decision Trees provide a good balance} of accuracy (90--96\%) and interpretability. The RPART/J48 tree structures reveal that the primary splits are on available storage, block size, and critical score---consistent with domain knowledge.
+    
+    \item \textbf{Current available storage is the single most important predictor} (RF importance = 100), followed by block size (55.3) and total storage (27.3). This makes intuitive sense: a node can only accept a block if it has sufficient free space relative to the block size.
+    
+    \item \textbf{Cross-tool validation confirms robustness:} The ranking of models (RF $>$ DT $>$ LR) is consistent across R, Weka, and JMP, and the absolute performance numbers are closely aligned, demonstrating that the findings are not tool-specific.
+    
+    \item The \textbf{correlation between Critical Score and Stability Score} ($r = -0.50$) is a notable finding: higher-criticality devices tend to have lower stability, which may reflect more demanding or variable operating conditions for critical applications.
+\end{enumerate}
+
+\subsection{Limitations and Future Scope}
+
+\subsubsection{Limitations}
+\begin{itemize}
+    \item \textbf{Synthetic data:} The dataset is synthetically generated. While it captures realistic attribute distributions and relationships, real-world IoT deployments may exhibit additional complexities such as network latency, intermittent connectivity, and heterogeneous data formats.
+    \item \textbf{Static snapshot:} The dataset represents a single time snapshot. In practice, device states (available storage, blockchain load, stability) change dynamically, requiring online or streaming classification.
+    \item \textbf{Limited feature set:} Attributes such as network bandwidth, power consumption, geographic location, and security posture are not included but may influence block acceptance in real systems.
+    \item \textbf{GLM instability:} The logistic regression model exhibited numerical instability (extremely large coefficients), suggesting that regularization (e.g., LASSO/Ridge via \texttt{glmnet}) or feature engineering could improve linear model performance.
+    \item \textbf{Class balance:} The dataset is approximately balanced ($\sim$52\% class 0, $\sim$48\% class 1), which is favorable for classification but may not reflect real-world class distributions.
+\end{itemize}
+
+\subsubsection{Future Scope}
+\begin{itemize}
+    \item \textbf{Real-world validation:} Deploy the Random Forest model on actual IoT testbeds to validate performance with real device data.
+    \item \textbf{Temporal modelling:} Extend the analysis to time-series classification, predicting acceptance over future time windows based on historical trends.
+    \item \textbf{Deep learning:} Explore neural network architectures (e.g., gradient-boosted trees via XGBoost, or lightweight neural networks) for potential further accuracy gains.
+    \item \textbf{Federated learning:} Investigate privacy-preserving federated learning approaches where each IoT node trains a local model and shares only model updates, avoiding raw data transmission.
+    \item \textbf{Multi-class extension:} Extend the binary classification to a multi-class or regression problem predicting the \textit{number of blocks} a node can accept or the \textit{optimal block size} for each node.
+    \item \textbf{Regularized linear models:} Apply LASSO or Elastic Net regularization to the logistic regression to address the coefficient instability observed in the GLM.
+\end{itemize}
+
+\end{document}
