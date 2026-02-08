@@ -1,0 +1,26 @@
+
+Measure
+Training
+Definition
+Entropy RSquare
+0.5426
+1-Loglike(model)/Loglike(0)
+Generalized RSquare
+0.7047
+(1-(L(0)/L(model))^(2/n))/(1-L(0)^(2/n))
+Mean -Log p
+0.3166
+∑ -Log(ρ[j])/n
+RASE
+0.3128
+√ ∑(y[j]-ρ[j])²/n
+Mean Abs Dev
+0.1982
+∑ |y[j]-ρ[j]|/n
+Misclassification Rate
+0.1363
+∑ (ρ[j]≠ρMax)/n
+N
+30000
+n
+
