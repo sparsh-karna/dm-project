@@ -1,0 +1,112 @@
+
+Call:
+NULL
+
+Coefficients:
+                                            Estimate Std. Error    z value
+(Intercept)                                1.881e+15  3.479e+06  5.406e+08
+block_size_kb                             -3.415e+12  2.141e+03 -1.596e+09
+`device_typeConnected Car Module`         -1.205e+14  3.709e+06 -3.250e+07
+`device_typeEnvironmental Sensor Node`     8.120e+14  3.459e+06  2.348e+08
+`device_typeFitness Tracker`               5.041e+14  3.490e+06  1.444e+08
+`device_typeHome Security Camera`         -4.121e+14  4.306e+06 -9.570e+07
+`device_typeIndustrial Sensor Node`        1.273e+15  3.568e+06  3.568e+08
+`device_typeSmart Agriculture Sensor`      1.202e+15  3.766e+06  3.192e+08
+`device_typeSmart Blood Pressure Monitor`  8.433e+13  3.600e+06  2.343e+07
+`device_typeSmart Coffee Maker`            3.603e+14  3.734e+06  9.650e+07
+`device_typeSmart Door Lock`               1.372e+14  3.772e+06  3.638e+07
+`device_typeSmart Doorbell`               -1.591e+15  3.952e+06 -4.027e+08
+`device_typeSmart Garage Door Opener`      1.062e+15  3.701e+06  2.868e+08
+`device_typeSmart Garage Sensor`           8.704e+14  3.739e+06  2.328e+08
+`device_typeSmart HVAC Controller`        -8.376e+14  3.687e+06 -2.272e+08
+`device_typeSmart Irrigation System`       8.151e+14  3.800e+06  2.145e+08
+`device_typeSmart Light Bulb`             -6.429e+12  3.788e+06 -1.697e+06
+`device_typeSmart Lighting Controller`    -2.852e+14  3.748e+06 -7.609e+07
+`device_typeSmart Meter (Electricity)`    -4.034e+13  3.675e+06 -1.098e+07
+`device_typeSmart Outlet / Switch`         8.383e+14  3.665e+06  2.287e+08
+`device_typeSmart Parking Sensor`          8.244e+14  3.809e+06  2.165e+08
+`device_typeSmart Pet Feeder`              9.817e+14  3.820e+06  2.570e+08
+`device_typeSmart Refrigerator`            4.751e+14  3.701e+06  1.284e+08
+`device_typeSmart Robot Vacuum`           -5.239e+14  3.841e+06 -1.364e+08
+`device_typeSmart Scale`                   6.827e+14  3.517e+06  1.941e+08
+`device_typeSmart Smoke Detector`          7.085e+14  3.849e+06  1.841e+08
+`device_typeSmart Speaker`                -1.837e+14  3.715e+06 -4.945e+07
+`device_typeSmart Thermostat`             -1.663e+14  3.762e+06 -4.420e+07
+`device_typeSmart Water Leak Sensor`       6.378e+14  3.822e+06  1.669e+08
+device_typeSmartwatch                     -3.826e+14  3.541e+06 -1.080e+08
+`device_typeVending Machine`               1.571e+14  3.687e+06  4.261e+07
+microcontrollerESP8266                    -4.800e+14  2.995e+06 -1.603e+08
+`microcontrollerNordic nRF52832`          -1.111e+15  2.408e+06 -4.613e+08
+microcontrollernRF52840                   -4.890e+14  2.881e+06 -1.697e+08
+`microcontrollerRaspberry Pi BCM2837`     -2.044e+15  1.025e+07 -1.994e+08
+`microcontrollerSilicon Labs EFR32MG21`   -5.972e+14  1.635e+06 -3.652e+08
+microcontrollerSTM32F1                    -7.675e+14  2.634e+06 -2.914e+08
+microcontrollerSTM32F4                    -2.160e+14  1.702e+06 -1.270e+08
+microcontrollerSTM32L0                    -2.061e+15  2.042e+06 -1.009e+09
+microcontrollerSTM32L4                    -1.224e+15  2.978e+06 -4.111e+08
+microcontrollerOther                      -1.234e+15  2.769e+06 -4.457e+08
+critical_score                            -2.773e+14  3.950e+05 -7.020e+08
+total_storage_kb                           2.289e+09  1.080e+01  2.119e+08
+current_available_storage_kb               8.258e+09  1.579e+01  5.229e+08
+blockchain_load_kb                         1.598e+10  1.236e+02  1.293e+08
+stability_score                            2.042e+14  3.959e+05  5.158e+08
+projected_growth_kb_day                   -4.238e+09  7.468e+01 -5.674e+07
+                                          Pr(>|z|)    
+(Intercept)                                 <2e-16 ***
+block_size_kb                               <2e-16 ***
+`device_typeConnected Car Module`           <2e-16 ***
+`device_typeEnvironmental Sensor Node`      <2e-16 ***
+`device_typeFitness Tracker`                <2e-16 ***
+`device_typeHome Security Camera`           <2e-16 ***
+`device_typeIndustrial Sensor Node`         <2e-16 ***
+`device_typeSmart Agriculture Sensor`       <2e-16 ***
+`device_typeSmart Blood Pressure Monitor`   <2e-16 ***
+`device_typeSmart Coffee Maker`             <2e-16 ***
+`device_typeSmart Door Lock`                <2e-16 ***
+`device_typeSmart Doorbell`                 <2e-16 ***
+`device_typeSmart Garage Door Opener`       <2e-16 ***
+`device_typeSmart Garage Sensor`            <2e-16 ***
+`device_typeSmart HVAC Controller`          <2e-16 ***
+`device_typeSmart Irrigation System`        <2e-16 ***
+`device_typeSmart Light Bulb`               <2e-16 ***
+`device_typeSmart Lighting Controller`      <2e-16 ***
+`device_typeSmart Meter (Electricity)`      <2e-16 ***
+`device_typeSmart Outlet / Switch`          <2e-16 ***
+`device_typeSmart Parking Sensor`           <2e-16 ***
+`device_typeSmart Pet Feeder`               <2e-16 ***
+`device_typeSmart Refrigerator`             <2e-16 ***
+`device_typeSmart Robot Vacuum`             <2e-16 ***
+`device_typeSmart Scale`                    <2e-16 ***
+`device_typeSmart Smoke Detector`           <2e-16 ***
+`device_typeSmart Speaker`                  <2e-16 ***
+`device_typeSmart Thermostat`               <2e-16 ***
+`device_typeSmart Water Leak Sensor`        <2e-16 ***
+device_typeSmartwatch                       <2e-16 ***
+`device_typeVending Machine`                <2e-16 ***
+microcontrollerESP8266                      <2e-16 ***
+`microcontrollerNordic nRF52832`            <2e-16 ***
+microcontrollernRF52840                     <2e-16 ***
+`microcontrollerRaspberry Pi BCM2837`       <2e-16 ***
+`microcontrollerSilicon Labs EFR32MG21`     <2e-16 ***
+microcontrollerSTM32F1                      <2e-16 ***
+microcontrollerSTM32F4                      <2e-16 ***
+microcontrollerSTM32L0                      <2e-16 ***
+microcontrollerSTM32L4                      <2e-16 ***
+microcontrollerOther                        <2e-16 ***
+critical_score                              <2e-16 ***
+total_storage_kb                            <2e-16 ***
+current_available_storage_kb                <2e-16 ***
+blockchain_load_kb                          <2e-16 ***
+stability_score                             <2e-16 ***
+projected_growth_kb_day                     <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance:  33223  on 23999  degrees of freedom
+Residual deviance: 427334  on 23953  degrees of freedom
+AIC: 427428
+
+Number of Fisher Scoring iterations: 25
+

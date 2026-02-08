@@ -1,0 +1,6 @@
+# A tibble: 3 × 6
+  model accuracy kappa sensitivity specificity   auc
+  <chr>    <dbl> <dbl>       <dbl>       <dbl> <dbl>
+1 GLM      0.757 0.517       0.837       0.685 0.761
+2 RPART    0.9   0.800       0.916       0.886 0.943
+3 RF       0.975 0.951       0.975       0.976 0.997

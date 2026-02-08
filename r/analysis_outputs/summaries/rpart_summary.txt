@@ -1,0 +1,25 @@
+CART 
+
+24000 samples
+    9 predictor
+    2 classes: 'no', 'yes' 
+
+No pre-processing
+Resampling: Cross-Validated (10 fold) 
+Summary of sample sizes: 21601, 21600, 21600, 21601, 21600, 21599, ... 
+Resampling results across tuning parameters:
+
+  cp           ROC        Sens       Spec     
+  0.003401954  0.9469585  0.8893557  0.9221012
+  0.003925331  0.9455185  0.8875209  0.9188726
+  0.004448709  0.9393406  0.8843279  0.9081441
+  0.004579553  0.9363453  0.8816964  0.9076210
+  0.004841242  0.9267581  0.8757933  0.9024755
+  0.004884857  0.9250007  0.8737997  0.9026499
+  0.007472668  0.9101757  0.8417334  0.9091943
+  0.037944871  0.8624035  0.7600490  0.9254163
+  0.047932659  0.8352579  0.7678682  0.8740353
+  0.558618283  0.5831311  0.9413727  0.2248896
+
+ROC was used to select the optimal model using the largest value.
+The final value used for the model was cp = 0.003401954.

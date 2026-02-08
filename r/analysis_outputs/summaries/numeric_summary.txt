@@ -1,0 +1,21 @@
+ block_size_kb    critical_score  total_storage_kb 
+ Min.   :  10.0   Min.   :1.000   Min.   :    128  
+ 1st Qu.: 148.2   1st Qu.:2.000   1st Qu.:    512  
+ Median : 303.5   Median :3.000   Median :   1024  
+ Mean   : 371.6   Mean   :2.925   Mean   :  23128  
+ 3rd Qu.: 553.5   3rd Qu.:4.000   3rd Qu.:   4096  
+ Max.   :1024.0   Max.   :5.000   Max.   :1048576  
+ current_available_storage_kb blockchain_load_kb  stability_score
+ Min.   :     0.0             Min.   :     0.00   Min.   :1.000  
+ 1st Qu.:   190.3             1st Qu.:    94.97   1st Qu.:2.000  
+ Median :   467.1             Median :   214.98   Median :3.000  
+ Mean   :  9824.8             Mean   :  1052.07   Mean   :3.075  
+ 3rd Qu.:  2025.7             3rd Qu.:   426.05   3rd Qu.:4.000  
+ Max.   :995810.0             Max.   :104305.71   Max.   :5.000  
+ projected_growth_kb_day
+ Min.   :3.612e+00      
+ 1st Qu.:4.373e+01      
+ Median :8.059e+01      
+ Mean   :1.531e+03      
+ 3rd Qu.:1.971e+02      
+ Max.   :2.000e+05      

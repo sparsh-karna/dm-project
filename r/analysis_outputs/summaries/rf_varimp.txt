@@ -1,0 +1,25 @@
+rf variable importance
+
+  only 20 most important variables shown (out of 46)
+
+                                       Overall
+current_available_storage_kb          100.0000
+block_size_kb                          55.3472
+total_storage_kb                       27.3062
+projected_growth_kb_day                14.5038
+critical_score                         14.1221
+blockchain_load_kb                     11.0214
+stability_score                         8.8497
+device_typeSmart Smoke Detector         2.5055
+device_typeSmart Agriculture Sensor     2.0140
+device_typeSmart Coffee Maker           1.0774
+device_typeSmart Robot Vacuum           0.8576
+device_typeFitness Tracker              0.8173
+device_typeSmartwatch                   0.8004
+device_typeSmart HVAC Controller        0.7643
+device_typeSmart Doorbell               0.7436
+microcontrollerSTM32L0                  0.7088
+microcontrollerSilicon Labs EFR32MG21   0.7010
+device_typeIndustrial Sensor Node       0.6934
+device_typeSmart Speaker                0.6491
+device_typeSmart Lighting Controller    0.5995
