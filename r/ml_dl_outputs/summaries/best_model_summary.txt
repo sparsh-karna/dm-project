@@ -1,0 +1,11 @@
+Best model: RandomForest
+Type: ml
+AUC: 0.99672
+F1: 0.96984
+Accuracy: 0.97117
+
+Ranking (top to bottom):
+RandomForest [AUC=0.99672, F1=0.96984, Acc=0.97117]
+MLP_nnet [AUC=0.97788, F1=0.90266, Acc=0.90783]
+RPART [AUC=0.93975, F1=0.88975, Acc=0.89533]
+LogReg_glmnet [AUC=0.92526, F1=0.83556, Acc=0.84617]
